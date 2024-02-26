@@ -39,6 +39,8 @@ public:
         build();
     }
 
+    ~suffix_tree() { clear(); }
+
     void build() {
         if (s.empty()) return;
 
