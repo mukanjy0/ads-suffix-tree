@@ -63,6 +63,7 @@ public:
                         u = u->par;
                     }
                     u = u->link;
+                    k = max(0,k-1);
                 }
                 else implicit = false;
 
@@ -76,11 +77,10 @@ public:
                     if (u->children.count(s[i+1])) { implicit = true; break; }
                     if (u->children.empty()) {
                         int dif = u->r - u->l;
-                        u->l = i+2-dif;
-                        u->r = i+2;
+                        u->l = i+2-dif-1; //change
                     }
                     else {
-                        v = new Node(i+1,m,u,i+1);
+                        v = new Node(i+1,m,u,j);
                         u->children[s[j]] = v;
                         if (prev) {
                             prev->link = u;
@@ -89,22 +89,22 @@ public:
                     }
                 }
                 else {
-                    if (s[u->l + pos] == s[i+1]) { implicit = true; break; }
+                    if (s[pos] == s[i+1]) { implicit = true; break; }
                     k -= u->length();
 
-                    Node* p = new Node(u->l, u->l+pos, u->par);
+                    Node* p = new Node(u->l, pos, u->par);
                     u->par->children[s[u->l]] = p;
-                    p->children[s[u->l + pos]] = u;
+                    p->children[s[pos]] = u;
                     u->par = p;
-                    u->l = u->l + pos;
-                    v = new Node(i+1 - pos,m,p,i+1);
+                    u->l = pos;
+                    v = new Node(i+1,m,p,j);
                     p->children[s[i+1]] = v;
 
                     if (prev) prev->link = p;
                     prev = p;
 
                     u = p->par;
-                    pos = p->par->r;
+                    pos = u->r;
                 }
             }
         }
@@ -117,9 +117,9 @@ public:
         while (i < n) {
             if (!u->children.count(p[i])) return false;
             u = u->children[p[i]];
+            cout << u->l << ' ' << u->r << '\n';
             for (int j = u->l; j < u->r; ++j,++i) {
                 if (i==n) return true;
-                cout << j << ' ' << i << '\n';
                 if (s[j] != p[i]) return false;
             }
         }

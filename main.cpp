@@ -8,8 +8,8 @@ void test() {
     suffix_tree sf (s);
     cout << boolalpha << sf.search("aw") << '\n';
     cout << boolalpha << sf.search("wy") << '\n';
-    cout << boolalpha << sf.search("wx") << '\n';
-    cout << boolalpha << sf.search("z") << '\n';
+    cout << boolalpha << sf.search("wxz") << '\n';
+    cout << boolalpha << sf.search("x") << '\n';
 }
 
 int main() {
