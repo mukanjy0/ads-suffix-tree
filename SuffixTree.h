@@ -34,8 +34,8 @@ class suffix_tree {
     Node* root {};
 public:
     explicit suffix_tree(string s) : s(s) {
-        m = (int)s.size();
         s.append("$");
+        m = (int)s.size();
         build();
     }
 
@@ -51,16 +51,20 @@ public:
         int j = 1; // j* explicit extension start
         int k = 0;
         int pos = 1;
+        bool implicit = true;
         Node* u = root;
         for (int i = 0; i < m; ++i) {
             Node* prev {};
 
             for (; j <= i+1; ++j) {
-                if (pos != u->r) {
-                    k -= u->length();
-                    u = u->par;
+                if (!implicit) {
+                    if (pos != u->r) {
+                        k -= u->length();
+                        u = u->par;
+                    }
+                    u = u->link;
                 }
-                u = u->link;
+                else implicit = false;
 
                 int len = i+1-j;
                 while (k < len) {
@@ -69,7 +73,7 @@ public:
                 }
                 pos = u->r - (k-len);
                 if (pos==u->r) {
-                    if (u->children.count(s[i+1])) break;
+                    if (u->children.count(s[i+1])) { implicit = true; break; }
                     if (u->children.empty()) {
                         int dif = u->r - u->l;
                         u->l = i+2-dif;
@@ -85,15 +89,15 @@ public:
                     }
                 }
                 else {
-                    if (s[u->l + pos] == s[i+1]) break;
-                    k -= u->r - u->l;
+                    if (s[u->l + pos] == s[i+1]) { implicit = true; break; }
+                    k -= u->length();
 
                     Node* p = new Node(u->l, u->l+pos, u->par);
                     u->par->children[s[u->l]] = p;
                     p->children[s[u->l + pos]] = u;
                     u->par = p;
                     u->l = u->l + pos;
-                    v = new Node(i+2 - (u->r - pos),m,p,i+1);
+                    v = new Node(i+1 - pos,m,p,i+1);
                     p->children[s[i+1]] = v;
 
                     if (prev) prev->link = p;

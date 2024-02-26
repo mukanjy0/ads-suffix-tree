@@ -7,9 +7,9 @@ void test() {
     string s = "awyawxawxz";
     suffix_tree sf (s);
     cout << boolalpha << sf.search("aw") << '\n';
-    cout << boolalpha << sf.search("ya") << '\n';
-    cout << boolalpha << sf.search("xz") << '\n';
-    cout << boolalpha << sf.search("zx") << '\n';
+    cout << boolalpha << sf.search("wy") << '\n';
+    cout << boolalpha << sf.search("wx") << '\n';
+    cout << boolalpha << sf.search("z") << '\n';
 }
 
 int main() {
