@@ -10,6 +10,7 @@ void test() {
     cout << boolalpha << sf.search("wy") << '\n';
     cout << boolalpha << sf.search("wxz") << '\n';
     cout << boolalpha << sf.search("x") << '\n';
+    cout << boolalpha << sf.search("z") << '\n';
 }
 
 int main() {

@@ -117,7 +117,6 @@ public:
         while (i < n) {
             if (!u->children.count(p[i])) return false;
             u = u->children[p[i]];
-            cout << u->l << ' ' << u->r << '\n';
             for (int j = u->l; j < u->r; ++j,++i) {
                 if (i==n) return true;
                 if (s[j] != p[i]) return false;
