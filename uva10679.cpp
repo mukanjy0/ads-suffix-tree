@@ -2,11 +2,7 @@
 // Created by iansg on 2/26/2024.
 //
 
-#ifndef ADS_SUFFIX_TREE_SUFFIXTREE_H
-#define ADS_SUFFIX_TREE_SUFFIXTREE_H
-
-#include <map>
-#include <string>
+#include <bits/stdc++.h>
 using namespace std;
 
 class suffix_tree {
@@ -34,8 +30,8 @@ class suffix_tree {
     Node* root {};
 public:
     explicit suffix_tree(string s) : s(s) {
-        m = (int)s.size();
         s.append("$");
+        m = (int)s.size();
         build();
     }
 
@@ -104,7 +100,6 @@ public:
 
                     if (prev) prev->link = p;
                     prev = p;
-                    prev->link = p->par;
 
                     u = p->par;
                     pos = u->r;
@@ -134,4 +129,20 @@ public:
     }
 };
 
-#endif //ADS_SUFFIX_TREE_SUFFIXTREE_H
+int slv() {
+    string s; cin >> s;
+    suffix_tree sf (s);
+    int q; cin >> q;
+    while (q--) {
+        string t; cin >> t;
+        cout << (sf.search(t) ? 'y' : 'n') << '\n';
+    }
+    return 0;
+}
+
+int main() {
+    int k;
+    cin >> k;
+    while (k--) slv();
+    return 0;
+}
