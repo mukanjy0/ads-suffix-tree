@@ -11,6 +11,7 @@ void test() {
     cout << boolalpha << sf.search("wxz") << '\n';
     cout << boolalpha << sf.search("x") << '\n';
     cout << boolalpha << sf.search("z") << '\n';
+    cout << boolalpha << sf.search(s) << '\n';
 }
 
 int main() {

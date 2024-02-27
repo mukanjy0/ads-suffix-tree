@@ -34,8 +34,8 @@ class suffix_tree {
     Node* root {};
 public:
     explicit suffix_tree(string s) : s(s) {
-        m = (int)s.size();
         s.append("$");
+        m = (int)s.size();
         build();
     }
 
@@ -55,7 +55,7 @@ public:
         int pos = 1;
         bool implicit = true;
         Node* u = root;
-        for (int i = 0; i < m; ++i) {
+        for (int i = 0; i < m-1; ++i) {
             Node* prev {};
 
             for (; j <= i+1; ++j) {
@@ -64,8 +64,8 @@ public:
                         k -= u->length();
                         u = u->par;
                     }
-                    u = u->link;
                     k = max(0,k-1);
+                    u = u->link;
                 }
                 else implicit = false;
 
@@ -76,19 +76,15 @@ public:
                 }
                 pos = u->r - (k-len);
                 if (pos==u->r) {
+                    if (prev) {
+                        prev->link = u;
+                        prev = nullptr;
+                    }
+
                     if (u->children.count(s[i+1])) { implicit = true; break; }
-                    if (u->children.empty()) {
-                        int dif = u->r - u->l;
-                        u->l = i+2-dif-1; //change
-                    }
-                    else {
-                        v = new Node(i+1,m,u,j);
-                        u->children[s[j]] = v;
-                        if (prev) {
-                            prev->link = u;
-                            prev = nullptr;
-                        }
-                    }
+
+                    v = new Node(i+1,m,u,j);
+                    u->children[s[i+1]] = v;
                 }
                 else {
                     if (s[pos] == s[i+1]) { implicit = true; break; }
@@ -104,7 +100,6 @@ public:
 
                     if (prev) prev->link = p;
                     prev = p;
-                    prev->link = p->par;
 
                     u = p->par;
                     pos = u->r;
