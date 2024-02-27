@@ -18,8 +18,6 @@ class suffix_tree {
         [[nodiscard]] int length() const { return r-l; }
         ll substr_cnt() {
             ll p = (ll)length();
-//            if (r == 17) cout << p << '\n';
-//            cout << l << ' ' << r << ' ' << p << '\n';
             for (auto [c, v] : children)
                 p += v->substr_cnt();
             return p;
@@ -119,17 +117,11 @@ public:
         Node* u = root;
         int i = 0, n = (int)p.size();
         while (i < n) {
-            if (!u->children.count(p[i])) {
-                cout << i << '\n';
-                return false;
-            }
+            if (!u->children.count(p[i])) return false;
             u = u->children[p[i]];
             for (int j = u->l; j < u->r; ++j,++i) {
                 if (i==n) return true;
-                if (s[j] != p[i]) {
-                    cout << i << '\n';
-                    return false;
-                }
+                if (s[j] != p[i]) return false;
             }
         }
         return true;
