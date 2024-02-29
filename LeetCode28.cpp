@@ -29,7 +29,7 @@ public:
         s.append("$");
         m = (int)s.size();
         build();
-        fill_first_indexes();
+        fill_first_indices();
     }
 
     ~suffix_tree() { clear(); }
@@ -101,7 +101,7 @@ public:
         }
     }
 
-    void fill_first_indexes() {
+    void fill_first_indices() {
         if (root == nullptr) return;
         stack<Node*> st;
         st.push(root);

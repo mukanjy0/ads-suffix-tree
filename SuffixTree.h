@@ -1,7 +1,3 @@
-//
-// Created by iansg on 2/26/2024.
-//
-
 #ifndef ADS_SUFFIX_TREE_SUFFIXTREE_H
 #define ADS_SUFFIX_TREE_SUFFIXTREE_H
 
